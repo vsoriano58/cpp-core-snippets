@@ -74,7 +74,7 @@ Paciente Maria Garcia operado con exito.
 ---
 ### 📘 Guía Extendida (PDF)
 Encontrarás un análisis detallado en el documento PDF de la carpeta `/docs`, incluyendo:
-#### 1. [s0010_El_puntero_this.odt](./docs/s0010_El_puntero_this.pdf) (El contenido teórico)
+#### 1. [El puntero this](./docs/el-puntero-this.pdf) (El contenido teórico)
 
 - **Sección 3.3:** Comparativa Técnica: **Puntero (*)** vs **Referencia (&)**.
 - **Sección 2.3:** Caso de Estudio: La "Magia" del `this` en el framework **Qt**.
