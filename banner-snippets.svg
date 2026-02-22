@@ -1,0 +1,5 @@
+<svg width="1200" height="200" viewBox="0 0 1200 200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="200" fill="#1b1f23" />
+  <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="monospace" font-size="50" font-weight="bold" fill="#f0883e">{ C++ SNIPPETS }</text>
+  <rect y="190" width="1200" height="10" fill="#00599c" />
+</svg>

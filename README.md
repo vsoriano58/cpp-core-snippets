@@ -1,10 +1,12 @@
 # 🚀 SNIPPETS Project
 
-<img src="https://capsule-render.vercel.app" alt="Banner Snippets" />
+<p align="center">
+  <img src="banner-snippets.svg" width="100%" alt="Banner del Proyecto">
+</p>
 
-[![C++](https://img.shields.io)](https://isocpp.org)
-[![Qt](https://img.shields.io)](https://www.qt.io)
-[![License: MIT](https://img.shields.io)](https://opensource.org)
+[![C++](https://img.shields.io/badge/Language-C%2B%2B-00599C)](https://isocpp.org)
+[![Qt](https://img.shields.io/badge/Framework-Qt-41CD52)](https://www.qt.io)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow)](https://opensource.org)
 
 Bienvenido a la biblioteca central de estructuras y soluciones de código.
 
