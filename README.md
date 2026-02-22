@@ -1,6 +1,6 @@
 # 🚀 SNIPPETS Project
 
-![Banner](https://capsule-render.vercel.app)
+<img src="https://capsule-render.vercel.app" alt="Banner Snippets" />
 
 [![C++](https://img.shields.io)](https://isocpp.org)
 [![Qt](https://img.shields.io)](https://www.qt.io)
