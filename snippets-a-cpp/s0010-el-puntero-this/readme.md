@@ -1,4 +1,4 @@
-# 📖 Snippet s0010: El Puntero `this` 
+# 📖 Snippet: El Puntero `this` 
 
 Este snippet explora uno de los conceptos más fundamentales y, a veces, peor comprendidos de C++: **la naturaleza física del objeto en memoria** y cómo los métodos saben sobre qué datos actuar.
 
