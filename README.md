@@ -1,8 +1,8 @@
 # 🚀 SNIPPETS Project
 
-![C++](https://img.shields.io)
-![Qt](https://img.shields.io)
-![License](https://img.shields.io)
+[![C++](https://img.shields.io)](https://isocpp.org)
+[![Qt](https://img.shields.io)](https://www.qt.io)
+[![License: MIT](https://img.shields.io)](https://opensource.org)
 
 Bienvenido a la biblioteca central de estructuras y soluciones de código.
 
