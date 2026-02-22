@@ -1,0 +1,32 @@
+# --- Compilación y Binarios (Ubuntu/GCC) ---
+build/
+bin/
+obj/
+*.o
+*.so
+*.a
+*.out
+
+# --- Archivos de configuración de Qt Creator ---
+*.user
+*.user.*
+*.bak
+*.orig
+
+# --- Documentación técnica privada (Formatos de edición) ---
+*.odt
+*.doc
+*.docx
+# Pero permitimos los PDF para que el usuario los descargue
+!*.pdf
+
+# --- Archivos temporales de Sistema y Editores (Linux) ---
+*~
+.directory
+.DS_Store
+.vscode/
+.idea/
+
+# --- Otros (Logs y volcados) ---
+*.log
+*.core
