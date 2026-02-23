@@ -80,3 +80,7 @@ int main() {
  * [REF-07] CICLO DE VIDA TEMPORAL: El objeto vive lo que dura la expresión. Es útil para 
  *           operaciones "usar y tirar" sin ensuciar la pila con nombres de variables.
  */
+
+ // Compilar
+ // ========
+ // g++ persona.cpp -o ./build/persona

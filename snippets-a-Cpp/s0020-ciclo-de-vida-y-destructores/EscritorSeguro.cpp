@@ -77,3 +77,7 @@ int main() {
  *    perdida hasta un 'delete' explícito. Por eso, en C++ sólido, preferimos objetos 
  *    directos en la pila siempre que sea posible.
  */
+
+ // Compilar
+ // ========
+ // g++ EscritorSeguro.cpp -o ./build/EscritorSeguro

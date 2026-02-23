@@ -64,3 +64,7 @@ int main() {
  * [REF-05] OPERADOR DE DIRECCIÓN (&): Extraemos la ubicación física de la variable 
  *           en la pila para enviarla al quirófano.
  */
+
+ // Compilar
+ // ========
+ // g++ cirujano.cpp -o ./build/cirujano
