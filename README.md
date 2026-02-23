@@ -8,7 +8,7 @@
 [![Qt](https://img.shields.io/badge/Framework-Qt-41CD52)](https://www.qt.io)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow)](https://opensource.org)
 
-Bienvenido a la biblioteca central de estructuras y soluciones de código.
+### Bienvenido a la biblioteca central de estructuras y soluciones de código.
 
 <p align="center">
   <img src="portada.svg" alt="El Cielo de los Snippets" width="100%">
@@ -19,26 +19,21 @@ Esta biblioteca de SNIPPETS se fundamenta en una arquitectura modular y escalabl
 ## 📁 Estructura del Proyecto
 
 ### 🔹 snippets-cpp
-- [El puntero this](./snippets-a-cpp/s0010-el-puntero-this/readme.md) - ✅ Operativo
-- [Ciclo de vida y Destructores](./snippets-a-cpp/s0020-ciclo-de-vida-y-destructores/readme.md) - 🏗️
-<!-- - [S0060: Move Semantics](./snippets-01-cpp/s0060-la-transferencia-de-poder-move-semantics/readme.md) - 🏗️ -->
-<!-- - [S0070: std::unique_ptr](./snippets-01-cpp/s0070-el-fin-limpieza-manual-std-unique-ptr/readme.md) - 🏗️ -->
+-  Conceptos fundamentales sobre `C++`
 
 ### 🔹 snippets-qt
-- [Hola Mundo Qt](./snippets-b-qt/s0210-holamundo-qt/readme.md) - 🏗️
-- [Memoria Dinámica](./snippets-b-qt/s0220-memoria-dinamica/readme.md) - 🏗️
-- [Lambdas y Slots](./snippets-b-qt/s0230-lambdas-y-slots/readme.md) - 🏗️
+-  Conceotos básicos sobre el Framework `Qt` para el diseño gráfico de ventanas en C++  
 
 ### 🔹 snippets-opencv
-- [cv::Mat](./snippets-c-opencv/s0310-cv-mat/readme.md) - 🏗️
+-  Conceptos básicos sobre la libreria de procesamiento de imágenes `OpenCV`
 
 ### 🔹 snippets-opencv-qt
-- [El Puente QImage](./snippets-d-opencv-qt/s0410-el-puente-qimage/readme.md) - 🏗️
+-  Ejemplos de integración de `OpenCV` y `Qt`
 
 ### 🔹 snippets-cuda
-- [Instalación CUDA](./snippets-e-cuda/s5110-instalacion-del-entorno-cuda/readme.md) - 🏗️
+-  Ejemplos de programas simples de computación paralelaco `CUDA`
 
 ### 🔹 snippets-cuda-qt
-- [Regresión Lineal](./snippets-f-cuda-qt/s6110-regresion-lineal/readme.md) - 🏗️
+-  Ejemplos de integración de `C++`, `CUDA` y `Qt`
 
 > "La ilusión es el motor de la creación."
