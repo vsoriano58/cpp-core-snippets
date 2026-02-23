@@ -9,11 +9,11 @@ find_package(Qt6 REQUIRED COMPONENTS Widgets)
 find_package(OpenCV REQUIRED)
 
 # Define el nombre del programa final y qué archivos lo componen
-add_executable(MiApp
-    main.cpp
+add_executable(webcam
+    webcam.cpp
 )
 
-target_link_libraries(MiApp PRIVATE 
+target_link_libraries(webcam PRIVATE 
     Qt6::Widgets 
     ${OpenCV_LIBS}
 )

@@ -8,11 +8,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
 find_package(OpenCV REQUIRED)
 
-add_executable(MiApp
-    main.cpp
+# Define el nombre del programa final y qué archivos lo componen
+add_executable(mas-segura
+    mas-segura.cpp
 )
 
-target_link_libraries(MiApp PRIVATE 
+target_link_libraries(mas-segura PRIVATE 
     Qt6::Widgets 
     ${OpenCV_LIBS}
 )

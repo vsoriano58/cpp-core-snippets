@@ -1,5 +1,7 @@
 # --- Compilación y Binarios (Ubuntu/GCC) ---
 build/
+kk/
+kk-docs/
 bin/
 obj/
 *.o

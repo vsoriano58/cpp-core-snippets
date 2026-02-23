@@ -1,6 +1,7 @@
-#include <opencv2/opencv.hpp> // Incluimos toda la potencia de OpenCV
+#include <opencv2/core.hpp>
+#include <opencv2/imgcodecs.hpp>
+#include <opencv2/highgui.hpp>
 #include <iostream>
-
 /** 
  * PROGRAMA: 04_HolaMundo_OpenCV
  * OBJETIVO: Abrir la cámara y mostrar el flujo de video en una ventana.
