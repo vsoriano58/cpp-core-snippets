@@ -18,22 +18,22 @@ Esta biblioteca de SNIPPETS se fundamenta en una arquitectura modular y escalabl
 
 ## 📁 Estructura del Proyecto
 
-### 🔹 snippets-cpp
+### 🔹 snippets-a-cpp
 -  Conceptos fundamentales sobre `C++`
 
-### 🔹 snippets-qt
+### 🔹 snippets-b-qt
 -  Conceotos básicos sobre el Framework `Qt` para el diseño gráfico de ventanas en C++  
 
-### 🔹 snippets-opencv
+### 🔹 snippets-c-opencv
 -  Conceptos básicos sobre la libreria de procesamiento de imágenes `OpenCV`
 
-### 🔹 snippets-opencv-qt
+### 🔹 snippets-d-opencv-qt
 -  Ejemplos de integración de `OpenCV` y `Qt`
 
-### 🔹 snippets-cuda
+### 🔹 snippets-e-cuda
 -  Ejemplos de programas simples de computación paralelaco `CUDA`
 
-### 🔹 snippets-cuda-qt
+### 🔹 snippets-f-cuda-qt
 -  Ejemplos de integración de `C++`, `CUDA` y `Qt`
 
 > "La ilusión es el motor de la creación."
