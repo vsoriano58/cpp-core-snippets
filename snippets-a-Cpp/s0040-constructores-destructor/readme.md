@@ -1,15 +1,17 @@
-# 📍 SXXXX: El Título `sujeto`
+# Ciclo de Vida: El Rastreador 🛰️
 
-> "En el centro de cada objeto, hay una referencia a sí mismo."
+### El escenario
+Visualizar la "magia negra" del compilador: ¿Cuándo nacen y mueren realmente los objetos?
 
-### 🌌 Contexto
-Una breve explicación de **por qué** existe esta pieza y qué problema resuelve en el ecosistema de C++.
+### Objetivos
+Identificar los tres hitos críticos de un objeto en la Pila:
+1. **Nacimiento:** Constructor parametrizado.
+2. **Duplicación:** El Constructor de Copia y su coste oculto (paso por valor).
+3. **Fallecimiento:** El Destructor automático al cierre de llaves `}`.
 
-### 🛠️ La Solución (Código)
-Aquí colocarías el bloque de código limpio, con comentarios que "iluminen" las partes clave.
-
-### 🚀 Aplicación en el Universo SNIPPETS
-¿Cómo conecta esta pieza con el resto? (Por ejemplo: cómo se usa `this` al integrar Qt o OpenCV).
+### Contenido del snippet
+- **[ConstructoresDestructor.cpp](ConstructoresDestructor.cpp)**: Un laboratorio con "trazas" de consola que imprimen el estado del objeto en tiempo real.
+- **Lección clave:** Entender por qué la copia muere antes que el original debido al orden de limpieza de la Pila (*LIFO*).
 
 ---
-[⬅ Volver al Mapa Estelar](../../README.md)
+[⬅️ Volver](..)

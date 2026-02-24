@@ -2,69 +2,72 @@
 #include <memory> // REQUISITO: Para usar Smart Pointers
 
 /**
- * SNIPPET #0070: El fin de la Limpieza Manual (std::unique_ptr).
+ * @file unique_ptr.cpp
+ * @brief El fin de la limpieza manual con std::unique_ptr.
+ * @author alcón68
  * 
- * CONCEPTO: Demostrar cómo el RAII (Resource Acquisition Is Initialization)
- * elimina la necesidad de destructores manuales complejos y evita fugas 
- * de memoria por diseño.
+ * @details Demostración de RAII moderno. unique_ptr garantiza que un recurso 
+ * tenga un ÚNICO dueño, eliminando fugas de memoria y eliminando la 
+ * necesidad de llamar a 'delete' manualmente.
  */
 
 class RecursoSeguro {
 public:
     RecursoSeguro() { std::cout << "[NACE] Recurso asignado en el Heap.\n"; }
-    ~RecursoSeguro() { std::cout << "[MUERE] Limpieza automatica por Smart Pointer.\n"; }
+    ~RecursoSeguro() { std::cout << "[MUERE] Limpieza automática por Smart Pointer.\n"; }
     
-    void saludar() { std::cout << "Trabajando con datos seguros...\n"; }
+    void trabajar() { std::cout << "[INFO] Trabajando con datos protegidos...\n"; }
 };
 
 void demostracionRAII() {
-    // 1. CREACIÓN: std::make_unique es la forma segura y eficiente (C++14).
-    // No usamos 'new', por lo tanto, no buscaremos un 'delete'.
-    std::unique_ptr<RecursoSeguro> ptr = std::make_unique<RecursoSeguro>();
+    // 1. CREACIÓN MODERNA (C++14): 
+    // std::make_unique es preferible a 'new' porque es más seguro frente a excepciones.
+    std::unique_ptr<RecursoSeguro> ptr1 = std::make_unique<RecursoSeguro>();
 
-    ptr->saludar();
+    ptr1->trabajar();
 
-    // 2. SEGURIDAD DE COPIA: 
-    // unique_ptr NO se puede copiar. Esto evita el desastre del Snippet #0040.
-    // std::unique_ptr<RecursoSeguro> ptr2 = ptr; // <-- ERROR DE COMPILACIÓN (Protección)
+    // 2. PROTECCIÓN CONTRA COPIA: 
+    // El desastre del snippet s0050 es imposible aquí. El compilador prohíbe la copia.
+    // std::unique_ptr<RecursoSeguro> copia = ptr1; // <-- ERROR: No se permite duplicar el dueño.
 
-    // 3. TRANSFERENCIA DE PROPIEDAD:
-    // Si queremos moverlo, debemos ser explícitos.
-    std::unique_ptr<RecursoSeguro> ptr2 = std::move(ptr); 
+    // 3. TRANSFERENCIA DE PROPIEDAD (Semántica de Movimiento):
+    // Movemos el recurso de ptr1 a ptr2. ptr1 quedará invalidado (nullptr).
+    std::unique_ptr<RecursoSeguro> ptr2 = std::move(ptr1); 
     
-    if (!ptr) {
-        std::cout << "[INFO] ptr ahora es null, la propiedad paso a ptr2.\n";
+    if (!ptr1) {
+        std::cout << "[ESTADO] ptr1 ahora es null. La propiedad pasó a ptr2.\n";
+    }
+
+    if (ptr2) {
+        ptr2->trabajar();
     }
 
 } // 4. FINAL DEL ÁMBITO: 
-  // ptr2 sale de alcance y libera la memoria AUTOMÁTICAMENTE. 
-  // No hay riesgo de olvido ni de doble liberación.
+  // Al salir de la función, ptr2 se destruye y libera el Heap AUTOMÁTICAMENTE.
+  // No hay riesgo de "Double Free" ni de "Memory Leak".
 
 int main() {
-    std::cout << "--- Inicio de Gestion Moderna ---" << std::endl;
+    std::cout << "--- Inicio de Gestión Moderna (Smart Pointers) ---" << std::endl;
     
     demostracionRAII();
     
-    std::cout << "--- Fin (Sin fugas de memoria detectadas) ---" << std::endl;
+    std::cout << "--- Fin (Memoria gestionada correctamente) ---" << std::endl;
     return 0;
 }
 
 /**
- * COMENTARIOS TÉCNICOS
- * ===================
- * 1. PROPIEDAD ÚNICA: [std::unique_ptr](https://en.cppreference.com) garantiza 
- *    que solo un puntero sea dueño del objeto en el Heap en un momento dado.
+ * ANÁLISIS TÉCNICO:
+ * 1. PROPIEDAD EXCLUSIVA: [std::unique_ptr](https://en.cppreference.com) 
+ *    implementa internamente el Constructor de Movimiento y elimina el de Copia.
  * 
- * 2. CERO OVERHEAD: En tiempo de ejecución, un `unique_ptr` es tan rápido como un puntero 
- *    crudo (`*`). No consume memoria extra ni ciclos de CPU adicionales.
+ * 2. RENDIMIENTO: Tiene "Zero Overhead". El ejecutable resultante es idéntico 
+ *    en velocidad al uso de punteros crudos (*), pero con seguridad garantizada.
  * 
- * 3. ADIÓS AL DELETE: El destructor del smart pointer llama automáticamente a `delete` 
- *    cuando el objeto sale del ámbito (scope), incluso si ocurre una excepción inesperada.
+ * 3. SEGURIDAD EXCEPCIONAL: Si el programa lanza una excepción, el Smart Pointer 
+ *    libera la memoria igualmente, algo que con 'delete' manual es difícil de asegurar.
  * 
- * 4. SEMÁNTICA DE MOVIMIENTO: Al usar `std::move`, transferimos el control sin copiar 
- *    los datos, lo cual es extremadamente eficiente para objetos pesados.
+ * 4. CONSEJO: Usa siempre `std::make_unique` (C++14) para evitar fugas potenciales 
+ *    durante la construcción de objetos complejos.
  */
 
- // Compilar
- // ========
- // g++ unique_ptr.cpp -o ./build/unique_ptr
+// Compilar: g++ unique_ptr.cpp -o ./build/unique_ptr

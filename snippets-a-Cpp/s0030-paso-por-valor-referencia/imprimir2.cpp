@@ -2,8 +2,7 @@
 
 /**
  * @title: Paso por Referencia (La Llave)
- * @tags: @References, @Memory, @Optimization, @Pointers
- * @description: Evidencia cómo trabajar sobre la dirección original permite 
+ * @description: Evidencia como al trabajar sobre la dirección original permite 
  * mutar datos y ahorrar recursos de memoria.
  */
 
@@ -13,15 +12,17 @@ void cambiarRealmente(int& x) {
 }
 
 int main() {
-    // [REF-006] El paciente vive en el Heap, pero el puntero 'num' nos da su ubicación.
+
+// [REF-006] El puntero 'num' vive en la Pila y guarda la dirección del dato que reside en el Heap.
+
     int *num = new int(10);
 
-    std::cout << "Valor inicial: " << *num << std::endl;
+    std::cout << "Valor inicial: " << *num << std::endl;    // 10
 
     // [REF-007] Usamos '*' para extraer al paciente y pasárselo a la función.
     cambiarRealmente(*num);
 
-    std::cout << "Valor mutado:  " << *num << " (Cambio persistente)" << std::endl;
+    std::cout << "Valor mutado:  " << *num << " (Cambio persistente)" << std::endl;     // 99
 
     delete num; 
     return 0;
@@ -34,10 +35,10 @@ int main() {
  *           otro nombre para la misma dirección de memoria que le pasemos.
  * [REF-005] MUTACIÓN DIRECCIONADA: Cualquier cambio aquí es un "golpe de remo" 
  *           en el barco original. No hay marcha atrás.
- * [REF-006] DINÁMICA: Usamos 'new' para demostrar que las referencias funcionan 
- *           igual de bien con datos en el Heap (montículo) que en la Pila.
+ * [REF-006] El puntero 'num' se aloja en la Pila y contiene la dirección del dato real, 
+ *           que vive en el Heap.
  * [REF-007] DESREFERENCIACIÓN: '*num' es la forma de decir "no me des la dirección, 
- *           dame lo que hay dentro".
+ *           dame lo que hay dentro, lo que vive en el Heap".
  */
 
  // Compilar

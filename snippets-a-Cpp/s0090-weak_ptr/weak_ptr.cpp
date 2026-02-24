@@ -1,75 +1,85 @@
 #include <iostream>
 #include <memory>
+#include <string>
 
 /**
- * SNIPPET #0090: El Observador Débil (std::weak_ptr).
+ * @file weak_ptr.cpp
+ * @brief El Observador Débil: Rompiendo Ciclos de Referencia.
+ * @author alcón68
  * 
- * CONCEPTO: Romper ciclos de referencia. Un weak_ptr "observa" un recurso
- * gestionado por shared_ptr pero SIN aumentar el contador de referencias.
- * Evita que dos objetos se mantengan vivos el uno al otro eternamente.
+ * CONCEPTO: Un weak_ptr "observa" un recurso gestionado por shared_ptr 
+ * SIN aumentar el contador de referencias. Es la cura para el "Ciclo de la Muerte".
  */
 
 class Persona {
 public:
     std::string nombre;
-    // Si usamos shared_ptr aquí y en la otra clase, crearíamos un ciclo.
-    // Usamos weak_ptr para decir: "Lo conozco, pero no soy su dueño".
+    // Si usáramos shared_ptr aquí, crearíamos una referencia circular.
+    // weak_ptr dice: "Sé quién es, pero no soy su dueño".
     std::weak_ptr<Persona> amigo; 
 
-    Persona(std::string n) : nombre(n) { std::cout << "[NACE] " << nombre << "\n"; }
-    ~Persona() { std::cout << "[MUERE] " << nombre << "\n"; }
+    Persona(std::string n) : nombre(n) { 
+        std::cout << "[NACE] " << nombre << " ha entrado en escena.\n"; 
+    }
+    
+    ~Persona() { 
+        std::cout << "[MUERE] " << nombre << " ha sido liberado del Heap.\n"; 
+    }
 
+    /**
+     * @brief Intenta interactuar con el recurso observado.
+     * @details Como el objeto puede haber muerto, debemos "bloquearlo" (lock)
+     * para obtener un shared_ptr temporal y seguro.
+     */
     void saludarAmigo() {
-        // Un weak_ptr no se puede usar directamente (podría estar muerto).
-        // Hay que "bloquearlo" (lock) para obtener un shared_ptr temporal.
         if (auto compartido = amigo.lock()) {
-            std::cout << nombre << " dice: Hola, " << compartido->nombre << "!\n";
+            std::cout << "  > " << nombre << " dice: ¡Hola, " << compartido->nombre << "!\n";
         } else {
-            std::cout << nombre << " dice: Mi amigo ya no existe...\n";
+            std::cout << "  > " << nombre << " dice: Mi amigo ya no existe (puntero expirado).\n";
         }
     }
 };
 
 void demostracionCiclo() {
+    // 1. CREACIÓN: Dos dueños independientes.
     auto paco = std::make_shared<Persona>("Paco");
     auto maria = std::make_shared<Persona>("Maria");
 
-    // Creamos la conexión
+    // 2. CONEXIÓN CRUZADA: 
+    // Paco observa a Maria y Maria observa a Paco.
+    // Al ser weak_ptr, el use_count() de ambos SIGUE SIENDO 1.
     paco->amigo = maria;
     maria->amigo = paco;
 
-    std::cout << "Referencias de Paco: " << paco.use_count() << "\n";
+    std::cout << "[ESTADO] Referencias de Paco: " << paco.use_count() << "\n";
     paco->saludarAmigo();
 
-} // FINAL DEL ÁMBITO: 
-  // Gracias a weak_ptr, el contador de referencias real es 1 para cada uno.
-  // Al salir de aquí, ambos mueren correctamente.
+} // 3. FINAL DEL ÁMBITO: 
+  // Al salir, los contadores bajan a 0. Ambos mueren correctamente.
+  // Si 'amigo' fuera shared_ptr, el contador sería 2 y NUNCA morirían.
 
 int main() {
-    std::cout << "--- Inicio de Relaciones Peligrosas ---" << std::endl;
+    std::cout << "--- Inicio: Rompiendo el Ciclo de la Muerte ---" << std::endl;
+    
     demostracionCiclo();
-    std::cout << "--- Fin (Sin fugas de memoria) ---" << std::endl;
+    
+    std::cout << "--- Fin (Memoria limpia y sin ciclos) ---" << std::endl;
     return 0;
 }
 
 /**
- * COMENTARIOS TÉCNICOS
- * ===================
- * 1. EL CICLO DE LA MUERTE: Si `amigo` fuera [std::shared_ptr](https://en.cppreference.com), 
- *    Paco no moriría hasta que Maria soltara su puntero, y Maria no moriría hasta que Paco 
- *    soltara el suyo. Resultado: Fuga de memoria (Memory Leak).
+ * ANÁLISIS TÉCNICO:
+ * 1. EL BLOQUEO (Lock): El método [lock()](https://en.cppreference.com) 
+ *    es atómico. Crea un shared_ptr temporal si el objeto existe.
  * 
- * 2. EL LOCK: El método `lock()` de [std::weak_ptr](https://en.cppreference.com) 
- *    es atómico. Verifica si el objeto aún existe y, si es así, nos da un shared_ptr 
- *    para trabajar seguros.
+ * 2. EXPIRACIÓN: Puedes usar `amigo.expired()` para verificar si el objeto 
+ *    ha sido borrado sin intentar acceder a él.
  * 
- * 3. CADUCIDAD: Puedes verificar si el objeto observado ha sido borrado usando 
- *    el método `expired()`.
+ * 3. CASOS DE USO: Crucial en caches de datos, sistemas de observadores (Observer Pattern) 
+ *    y estructuras de datos cíclicas como grafos o árboles con punteros al padre.
  * 
- * 4. CASO DE USO: Ideal para sistemas de caché, observadores de eventos o estructuras 
- *    de datos cíclicas como grafos o listas doblemente enlazadas.
+ * 4. SEGURIDAD: Evita el "Dangling Pointer" (puntero colgado) porque el sistema 
+ *    sabe si la memoria a la que apunta el weak_ptr ha sido liberada.
  */
 
- // Compilar
- // ========
- // g++ weak_ptr.cpp -o ./build/weak_ptr
+// Compilar: g++ weak_ptr.cpp -o ./build/weak_ptr

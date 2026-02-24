@@ -2,10 +2,9 @@
 #include <string>
 
 /**
- * SNIPPET #0040: Seguimiento del Ciclo de Vida del Objeto.
- * 
- * CONCEPTO: Visualizar los momentos exactos en los que el compilador 
- * invoca al Constructor, al Constructor de Copia y al Destructor.
+ * @title: Seguimiento del Ciclo de Vida del Objeto. 
+ * @description: Visualizar los momentos exactos en los que el compilador 
+ *               invoca al Constructor, al Constructor de Copia y al Destructor.
  */
 
 class Rastreador {
@@ -15,45 +14,64 @@ private:
 public:
     // 1. CONSTRUCTOR POR DEFECTO / PARAMETRIZADO
     Rastreador(std::string nombre) : etiqueta(nombre) {
-        std::cout << "[NACE] Objeto '" << etiqueta << "' creado en la Pila.\n";
+        std::cout << "[NACE] Objeto '" << etiqueta << "' creado en la Pila.\n";     // [REF-02]
     }
 
     // 2. CONSTRUCTOR DE COPIA (Se activa en pasos por VALOR)
     Rastreador(const Rastreador& otro) {
+        // C++ no usa el puntero 'this' del original. En su lugar, fabrica un objeto nuevo 
+        // basado en el primero
         etiqueta = "Copia de " + otro.etiqueta;
-        std::cout << "[COPIA] Se crea una '" << etiqueta << "' (fotocopia).\n";
+        std::cout << "[COPIA] Se crea una '" << etiqueta << "' (fotocopia).\n";    // [REF-04] 
     }
 
     // 3. DESTRUCTOR
     ~Rastreador() {
-        std::cout << "[MUERE] Objeto '" << etiqueta << "' desaparece de la Pila.\n";
+        std::cout << "[MUERE] Objeto '" << etiqueta << "' desaparece de la Pila.\n";   // [REF-06]  
     }
 
     void saludar() {
-        std::cout << "   Hola desde " << etiqueta << std::endl;
+        std::cout << "   Hola desde " << etiqueta << std::endl;     // [REF-05b]
     }
 };
 
 // Función que fuerza un paso por VALOR (fotocopia)
 void funcionQueCopia(Rastreador r) {
-    r.saludar();
+    r.saludar();    // [REF-05a] -> [REF-05b]
+                    // Muere la copia
 }
 
 int main() {
-    std::cout << "--- Inicio del Main ---\n";
+    std::cout << "--- Inicio del Main ---\n";       // [REF-01]
 
     {
         Rastreador original("Original_01"); // Invocación del Constructor
         
-        std::cout << "\nLlamando a funcionQueCopia...\n";
+        std::cout << "\nLlamando a funcionQueCopia...\n";                   // [REF-03]
         funcionQueCopia(original); // Invocación del Constructor de Copia
-        std::cout << "Regreso al Main...\n";
+        std::cout << "Regreso al Main...\n";    // [REF-07]
 
     } // Invocación del Destructor de 'original' al salir del ámbito
 
     std::cout << "\n--- Fin del Main ---\n";
     return 0;
 }
+
+/*
+    Salida del programa
+    ===================
+    --- Inicio del Main ---                                         // [REF-01]
+    [NACE] Objeto 'Original_01' creado en la Pila.                  // REF-02]
+
+    Llamando a funcionQueCopia...                                   // [REF-03]
+    [COPIA] Se crea una 'Copia de Original_01' (fotocopia).         // [REF-04]
+    Hola desde Copia de Original_01                                 // [REF-05a]->[REF-05b]
+    [MUERE] Objeto 'Copia de Original_01' desaparece de la Pila.    // [REF-06]
+    Regreso al Main...                                              // [REF-07]
+    [MUERE] Objeto 'Original_01' desaparece de la Pila.             // [REF-06]
+
+    --- Fin del Main ---
+*/
 
 /**
  * COMENTARIOS

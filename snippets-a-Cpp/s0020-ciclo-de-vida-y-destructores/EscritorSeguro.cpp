@@ -3,15 +3,14 @@
 #include <string>
 
 /**
- * SNIPPET #0020: Gestión de Recursos mediante el Ciclo de Vida (RAII).
- * 
- * CONCEPTO: Vincular la existencia de un recurso crítico (un archivo) 
- * a la vida de una variable en la Pila (Stack).
+ * @title: Gestión de Recursos mediante el Ciclo de Vida (RAII).
+ * @description: Vincular la existencia de un recurso crítico (un archivo) 
+ *               a la vida de una variable en la Pila (Stack).
  */
 
 class EscritorSeguro {
 private:
-    std::ofstream archivo; // El recurso físico (identificador de flujo en disco)
+    std::ofstream archivo;  // El recurso físico (identificador de flujo en disco)
 
 public:
     // 1. ADQUISICIÓN: El constructor vincula el objeto al recurso externo.
@@ -42,7 +41,8 @@ int main() {
         
         miNota.escribir("Hola, esto es C++ solido.");
         
-        // Al llegar a la llave de cierre '}', el 'frame' de la pila se limpia.
+        // Al llegar a la llave de cierre '}' del main, el 'frame' de la pila se limpia.
+        // La memoria que ocupaba la variable 'miNota' se libera.
         // El compilador inserta automáticamente la llamada al destructor ~EscritorSeguro().
     } 
 
@@ -56,14 +56,14 @@ int main() {
  * COMENTARIOS
  * ===========
  * 1. EL CONCEPTO RAII:
- *    Resource Acquisition Is Initialization. Es el pilar de C++ para evitar fugas.
- *    La idea es que el programador no tenga que acordarse de hacer ".close()" o 
- *    "free()". Si la variable muere en la Pila, el recurso muere con ella.
+ *    Resource Acquisition Is Initialization. Es el pilar de C++ para evitar fugas de memoria.
+ *    La idea es que el programador no tenga que acordarse de hacer ".close()" o "free()". 
+ *    Si la variable muere en la Pila, el recurso asociado muere con ella.
  * 
  * 2. SEGURIDAD ANTE EXCEPCIONES:
- *    Si el programa fallara o lanzara un error dentro del bloque {}, el destructor 
- *    se ejecutaría igualmente mientras la pila se "desenrolla". Esto garantiza que 
- *    el archivo no quede bloqueado por el Sistema Operativo.
+ *    Si ocurre un error, el sistema no se detiene en seco; inicia un efecto dominó donde todas 
+ *    las piezas (objetos) en la pila caen en orden inverso, ejecutando sus destructores hasta 
+ *    limpiar el escenario
  * 
  * 3. PILA VS HEAP EN ESTE SNIPPET:
  *    - 'miNota' reside en la PILA (gestión automática).
@@ -73,9 +73,8 @@ int main() {
  * 
  * 4. DIFERENCIA CON PUNTEROS:
  *    Si hubiéramos hecho 'EscritorSeguro* miNota = new EscritorSeguro(...)', el destructor 
- *    NUNCA se llamaría al salir del bloque. El archivo quedaría abierto y la memoria 
- *    perdida hasta un 'delete' explícito. Por eso, en C++ sólido, preferimos objetos 
- *    directos en la pila siempre que sea posible.
+ *    NUNCA se llamaría automáticamente; el puntero se perdería, pero el objeto seguiría 'vivo'
+ *    en el Heap, dejando el archivo abierto (Leak de recurso)."
  */
 
  // Compilar

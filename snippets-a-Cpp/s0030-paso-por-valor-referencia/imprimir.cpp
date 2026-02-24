@@ -3,25 +3,24 @@
 
 /**
  * @title: Paso por Valor (La Fotocopia)
- * @tags: @Basics, @Stack, @Performance, @Copy
- * @description: Demuestra cómo el paso por valor crea una copia independiente 
- * que no afecta al dato original.
+ * @description: Demuestra cómo el paso por valor crea una copia independiente cuyos
+ * cambios no afectan al dato original.
  */
 
 // [REF-001] La firma recibe 'int x'. El compilador reserva un nuevo espacio en la pila.
 void intentarCambiarValor(int x) {
-    x = 99; // [REF-002] Solo modificamos la copia local.
+    x = 99;      // [REF-002] Solo modificamos la copia local.
 }
 
 int main() {
     int dato = 10;
 
-    std::cout << "Original antes: " << dato << std::endl;
+    std::cout << "Original antes: " << dato << std::endl;  // 10
 
     // [REF-003] Se envía el valor, no la variable.
     intentarCambiarValor(dato);
 
-    std::cout << "Original despues: " << dato << " (Inalterado)" << std::endl;
+    std::cout << "Original despues: " << dato << " (Inalterado)" << std::endl;  // 10
 
     return 0;
 }

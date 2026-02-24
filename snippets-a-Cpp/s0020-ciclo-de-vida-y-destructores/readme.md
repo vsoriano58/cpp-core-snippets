@@ -1,15 +1,15 @@
-# 📍 SXXXX: El Título `sujeto`
+# Gestión de Recursos (RAII) 🛡️
 
-> "En el centro de cada objeto, hay una referencia a sí mismo."
+### El escenario
+Garantizar que un recurso crítico (memoria, archivos, sockets) se libere siempre, incluso si el programa falla o lanza una excepción.
 
-### 🌌 Contexto
-Una breve explicación de **por qué** existe esta pieza y qué problema resuelve en el ecosistema de C++.
+### Objetivos
+Demostrar el patrón **RAII** (*Resource Acquisition Is Initialization*), donde el ciclo de vida de un objeto en la **Pila** (Stack) gobierna la seguridad de los recursos del sistema.
 
-### 🛠️ La Solución (Código)
-Aquí colocarías el bloque de código limpio, con comentarios que "iluminen" las partes clave.
+### Contenido del snippet
 
-### 🚀 Aplicación en el Universo SNIPPETS
-¿Cómo conecta esta pieza con el resto? (Por ejemplo: cómo se usa `this` al integrar Qt o OpenCV).
+#### [EscritorSeguro.cpp](EscritorSeguro.cpp)
+- **Concepto clave:** El **Destructor** (`~`) como garantía de limpieza automática.
+- **El "Desenrollado" (Stack Unwinding):** Mecanismo del compilador que recorre la pila hacia atrás destruyendo objetos y liberando sus recursos ante cualquier salida del bloque.
+- **Pila vs Heap:** Contraste entre la seguridad de los objetos locales frente al riesgo de fuga (*leak*) de los punteros manuales.
 
----
-[⬅ Volver al Mapa Estelar](../../README.md)

@@ -1,84 +1,87 @@
 #include <iostream>
 #include <memory>
+#include <string>
 #include <vector>
 
 /**
- * SNIPPET #0100: EL ECOSISTEMA FINAL (Resumen de Smart Pointers).
+ * @file resumen.cpp
+ * @brief Ecosistema Final: Integración de la familia Smart Pointers.
+ * @author alcón68
  * 
- * ESCENARIO: 
- * 1. Un 'Motor' (Recurso pesado) gestionado por un Servidor (Shared).
- * 2. Un 'Usuario' que tiene su propia 'Llave' privada (Unique).
- * 3. Un 'Monitor' que vigila si el Motor sigue vivo (Weak).
+ * ESCENARIO DE DISEÑO:
+ * 1. UNIQUE_PTR: Propiedad privada e intransferible (El ID del Usuario).
+ * 2. SHARED_PTR: Recurso compartido por múltiples entidades (El Motor).
+ * 3. WEAK_PTR: Observador pasivo que no retiene el recurso (El Monitor).
  */
 
 class Motor {
 public:
-    Motor() { std::cout << "[MOTOR] Rugiendo... (Memoria reservada)\n"; }
-    ~Motor() { std::cout << "[MOTOR] Apagado y liberado.\n"; }
-    void estado() { std::cout << " -> Motor funcionando al 100%\n"; }
+    Motor() { std::cout << "[MOTOR] Reserva de Hardware: Rugiendo... ✅\n"; }
+    ~Motor() { std::cout << "[MOTOR] Hardware Liberado: Apagado seguro. 🛑\n"; }
+    void check() { std::cout << "  -> Telemetría: Funcionando al 100%.\n"; }
 };
 
 class Usuario {
-    std::unique_ptr<std::string> ID; // Propiedad exclusiva del ID
+    // El ID es propiedad EXCLUSIVA del usuario. Nadie más puede ser dueño de este string.
+    std::unique_ptr<std::string> id_privado; 
 public:
-    Usuario(std::string nombre) : ID(std::make_unique<std::string>(nombre)) {}
-    void identificar() { std::cout << "[USUARIO] Mi ID privado es: " << *ID << "\n"; }
+    Usuario(std::string nombre) : id_privado(std::make_unique<std::string>(nombre)) {}
+    
+    void identificar() { 
+        std::cout << "[USUARIO] Accediendo a identidad segura: " << *id_privado << "\n"; 
+    }
 };
 
 int main() {
-    std::cout << "=== SNIPPET #0100: EL GRAN RESUMEN ===\n\n";
+    std::cout << "=== SNIPPET #0100: EL ECOSISTEMA SMART POINTERS ===\n\n";
 
-    // 1. UNIQUE_PTR: Propiedad privada e intransferible.
-    // Solo el objeto 'paco' puede leer su ID. Nadie más lo comparte.
+    // 1. UNIQUE_PTR: Eficiencia y Privacidad.
+    // Solo 'paco' gestiona este recurso. No hay sobrecoste de contadores.
     Usuario paco("PACO_99");
     paco.identificar();
 
-    // 2. SHARED_PTR: El recurso compartido.
-    // El Servidor A y el Servidor B comparten el mismo motor.
-    std::shared_ptr<Motor> motorCompartido = std::make_shared<Motor>();
-    std::cout << "[INFO] Usuarios del motor: " << motorCompartido.use_count() << "\n";
-
-    {
-        std::shared_ptr<Motor> servidorAuxiliar = motorCompartido; 
-        std::cout << "[INFO] Entra Servidor Auxiliar. Usuarios: " << motorCompartido.use_count() << "\n";
-    } // Aquí muere el auxiliar, pero el motor NO.
-
-    // 3. WEAK_PTR: El observador pasivo.
-    // El monitor sabe que el motor existe, pero no "tira" de él para mantenerlo vivo.
-    std::weak_ptr<Motor> monitor = motorCompartido;
-
-    std::cout << "\n--- Simulando Apagado del Sistema ---\n";
+    // 2. SHARED_PTR: Gestión Colectiva.
+    // Creamos el motor. Contador = 1.
+    std::shared_ptr<Motor> motorPrincipal = std::make_shared<Motor>();
     
-    // Verificamos el motor antes de que muera
-    if (auto tmp = monitor.lock()) {
-        std::cout << "[MONITOR] El motor sigue online.";
-        tmp->estado();
+    {
+        std::cout << "\n[SISTEMA] Entra Servidor Auxiliar en el clúster...\n";
+        std::shared_ptr<Motor> servidorAux = motorPrincipal; // Contador = 2.
+        std::cout << "[INFO] Dueños del motor: " << motorPrincipal.use_count() << "\n";
+        servidorAux->check();
+        std::cout << "[SISTEMA] Servidor Auxiliar se desconecta.\n";
+    } // Aquí muere servidorAux, pero el motor sigue vivo. Contador = 1.
+
+    // 3. WEAK_PTR: Vigilancia No Invasiva.
+    // El monitor "mira" el motor pero no impide que se apague.
+    std::weak_ptr<Motor> monitorLocal = motorPrincipal;
+
+    std::cout << "\n--- Simulando Apagado del Sistema Central ---\n";
+    
+    // Verificamos salud del motor a través del monitor
+    if (auto temporal = monitorLocal.lock()) {
+        std::cout << "[MONITOR] Motor detectado online.";
+        temporal->check();
     }
 
-    motorCompartido.reset(); // Forzamos la muerte del motor (Contador -> 0)
+    // El dueño principal suelta el motor. Contador -> 0.
+    std::cout << "[INFO] Liberando puntero principal...\n";
+    motorPrincipal.reset(); 
 
-    // El monitor intenta mirar ahora
-    if (monitor.expired()) {
-        std::cout << "[MONITOR] Alerta: El motor ha sido destruido legalmente.\n";
+    // El monitor intenta acceder ahora al recurso destruido
+    if (monitorLocal.expired()) {
+        std::cout << "[MONITOR] Alerta: El recurso ha sido destruido legalmente. Acceso denegado.\n";
     }
 
-    std::cout << "\n=== FIN DEL ECOSISTEMA SEGURO ===\n";
+    std::cout << "\n=== CIERRE DEL ECOSISTEMA SEGURO ===\n";
     return 0;
 }
 
 /**
- * REFLEXIÓN FINAL PARA TU DOCUMENTO:
- * =================================
- * - El UNIQUE_PTR es tu "cepillo de dientes": no se comparte (eficiencia pura).
- * - El SHARED_PTR es "el coche de la familia": todos tienen llave y el último 
- *   que lo usa cierra el garaje (gestión automática).
- * - El WEAK_PTR es "el retrovisor": miras lo que hay atrás, pero no controlas 
- *   el movimiento de los otros coches (evita dependencias circulares).
- * 
- * Con este arsenal, los errores de memoria manual del Snippet #0040 son 
- * ahora cosa del pasado.
+ * RESUMEN FILOSÓFICO PARA TU "CHULETA":
+ * 1. UNIQUE_PTR: El "Cepillo de Dientes". No se presta. Si lo pierdes, se tira (Destruye).
+ * 2. SHARED_PTR: El "Coche de Empresa". Varios tienen llave. El último que lo usa, cierra el garaje.
+ * 3. WEAK_PTR: El "Espejo Retrovisor". Miras lo que hay, pero no controlas su existencia.
  */
 
- // Compilar
- // ========
- // g++ resumen.cpp -o ./build/resumen
+// Compilar: g++ resumen.cpp -o ./build/resumen
