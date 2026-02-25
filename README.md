@@ -18,22 +18,25 @@ Esta biblioteca de SNIPPETS se fundamenta en una arquitectura modular y escalabl
 
 ## 📁 Estructura del Proyecto
 
-### 🔹 snippets-a-cpp
--  Conceptos fundamentales sobre `C++`
+### 🔹 10-cpp-core
+- **C++ Moderno:** Implementación de algoritmos, gestión de memoria (smart pointers), programación orientada a objetos (POO) y estándares recientes del lenguaje.
 
-### 🔹 snippets-b-qt
--  Conceotos básicos sobre el Framework `Qt` para el diseño gráfico de ventanas en C++  
+### 🔹 20-qt-framework
+- **Qt Framework:** Desarrollo de interfaces gráficas (GUI) y lógica de aplicaciones multiplataforma.
+- Enfoque en: Core de Qt, sistema de Señales y Slots, gestión de Widgets y eventos.
 
-### 🔹 snippets-c-opencv
--  Conceptos básicos sobre la libreria de procesamiento de imágenes `OpenCV`
+### 🔹 30-opencv-vision
+- **OpenCV (Computer Vision):** Biblioteca de código abierto para visión artificial y procesamiento de imágenes en tiempo real.
+- Aplicaciones: Filtrado, detección de objetos, transformaciones espaciales y análisis matricial.
 
-### 🔹 snippets-d-opencv-qt
--  Ejemplos de integración de `OpenCV` y `Qt`
+### 🔹 40-qt-opencv
+- **Integración Visual:** Implementación de flujos de video y procesamiento de imágenes dentro de interfaces gráficas interactivas.
 
-### 🔹 snippets-e-cuda
--  Ejemplos de programas simples de computación paralelaco `CUDA`
+### 🔹 50-cuda-parallel
+- **GPGPU (General-Purpose computing on GPUs):** Uso de la unidad de procesamiento gráfico para cálculos computacionales masivos.
+- **CUDA:** Computación paralela de alto rendimiento utilizando núcleos NVIDIA para optimizar algoritmos intensivos.
 
-### 🔹 snippets-f-cuda-qt
--  Ejemplos de integración de `C++`, `CUDA` y `Qt`
+### 🔹 60-qt-cuda
+- **Visualización de Datos:** Creación de Dashboards y herramientas de monitoreo para procesos ejecutados en GPU, uniendo la potencia de cálculo con interfaces de usuario fluidas.
 
-> "La ilusión es el motor de la creación."
+> "La ilusión es el motor de la creación; el orden es el motor de la maestría."
