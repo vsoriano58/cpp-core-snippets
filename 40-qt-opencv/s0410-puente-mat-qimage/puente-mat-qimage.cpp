@@ -40,3 +40,22 @@ int main(int argc, char *argv[]) {
 
     return app.exec();
 }
+
+/**
+ * REFERENCIAS TÉCNICAS (S0410):
+ * 
+ * [REF-01] MAT.DATA: Es el puntero al primer byte de la matriz. Al pasarlo a QImage, 
+ *          NO estamos copiando la imagen, estamos diciéndole a Qt: "Usa estos 
+ *          mismos píxeles que ya tiene OpenCV". Es ultra-eficiente (Zero-copy).
+ * 
+ * [REF-02] MAT.STEP: Indica cuántos bytes ocupa una fila completa (incluyendo 
+ *          posible padding). Es vital para que Qt no "tuerza" la imagen al dibujarla.
+ * 
+ * [REF-03] RGB888 vs BGR: OpenCV vive en el mundo BGR (Blue-Green-Red). Qt espera 
+ *          RGB. Si no usáramos '.rgbSwapped()', ¡Lena se vería azulada y con la 
+ *          piel naranja!
+ * 
+ * [REF-04] QPIXMAP: Mientras que QImage es para manipular píxeles (CPU), 
+ *          QPixmap está optimizado para ser dibujado en pantalla (GPU/X11). 
+ *          Por eso el QLabel necesita la conversión final.
+ */

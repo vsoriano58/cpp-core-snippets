@@ -37,3 +37,25 @@ int main() {
 
     return 0;
 }
+
+/**
+ * REFERENCIAS TÉCNICAS (S0210-B):
+ * 
+ * [REF-01] CARGA BGR: Al cargar en color, cada píxel real de la imagen 
+ *          se descompone en 3 valores (uchar) en memoria: Azul, Verde y Rojo.
+ * 
+ * [REF-02] nCols (Ancho en Bytes): Es vital multiplicar 'cols' por 'channels' 
+ *          porque el puntero 'uchar*' recorre bytes individuales, no píxeles. 
+ *          Para una imagen de 512px de ancho, nCols será 1536.
+ * 
+ * [REF-03] BUCLE EXTERNO: Recorremos las filas de forma secuencial. 
+ *          Esto es amigable con la caché L1/L2 del procesador.
+ * 
+ * [REF-04] img.ptr<uchar>(i): Esta es la función clave. Devuelve la 
+ *          dirección de memoria donde empieza la fila 'i'. Solo se llama 
+ *          una vez por fila, ahorrando miles de cálculos respecto al método .at.
+ * 
+ * [REF-05] ARITMÉTICA DE PUNTEROS: Al usar 'pFila[j]', accedemos directamente 
+ *          al byte. La operación '255 - valor' invierte la intensidad: 
+ *          el blanco (255) se vuelve negro (0) y viceversa.
+ */

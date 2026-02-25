@@ -42,3 +42,23 @@ int main() {
 
     return 0;
 }
+
+/**
+ * REFERENCIAS TÉCNICAS (S0210):
+ * 
+ * [REF-01] CARGA: Al usar IMREAD_COLOR, cada píxel ocupa 3 bytes (B, G, R).
+ * 
+ * [REF-02] CÁLCULO DE COLS: No basta con 'img.cols'. Para recorrer el puntero,
+ *          necesitamos el número total de valores (columnas * canales).
+ * 
+ * [REF-03] CONTINUIDAD: OpenCV a veces añade "relleno" (padding) al final de 
+ *          las filas para alinearlas con la memoria de la CPU. 'isContinuous()' 
+ *          nos dice si ese relleno NO existe. Si es cierto, podemos tratar 
+ *          toda la imagen como una única fila gigante, eliminando el coste 
+ *          del bucle externo.
+ * 
+ * [REF-04] ACCESO POR PUNTERO: 'img.ptr<uchar>(i)' devuelve la dirección de 
+ *          memoria exacta del primer byte de la fila 'i'. Al usar 'p[j]', 
+ *          estamos haciendo aritmética de punteros pura, la forma más rápida 
+ *          que permite el lenguaje C++.
+ */

@@ -44,3 +44,22 @@ int main() {
     // Al salir del ámbito, 'cap' se libera automáticamente (Destructor).
     return 0;
 }
+
+/**
+ * REFERENCIAS TÉCNICAS (S0330):
+ * 
+ * [REF-01] VideoCapture(0): El índice '0' abre la cámara predeterminada del sistema. 
+ *          Si tuvieras una cámara USB externa, podrías probar con el índice '1'.
+ * 
+ * [REF-02] cap.isOpened(): Paso crítico de seguridad. Si el driver de la cámara 
+ *          está ocupado por otra app o no existe, el programa fallará aquí.
+ * 
+ * [REF-03] OPERADOR >>: Es un alias de 'cap.read(frame)'. Extrae el siguiente 
+ *          cuadro del flujo de vídeo y lo decodifica en una matriz BGR.
+ * 
+ * [REF-04] cv::waitKey(30): Vital por dos razones:
+ *          1. Genera un retraso de 30ms (aprox. 33 FPS) para que el ojo humano 
+ *             perciba fluidez.
+ *          2. Permite que 'cv::imshow' procese los eventos de la ventana (dibujado). 
+ *             Sin esta línea, la ventana se quedaría congelada en blanco.
+ */
