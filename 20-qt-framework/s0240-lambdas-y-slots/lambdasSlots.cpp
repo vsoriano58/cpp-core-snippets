@@ -29,8 +29,8 @@ int main(int argc, char *argv[]) {
 
     // 2. LA SUTILEZA TÉCNICA
     // Fíjate que no hemos tenido que crear una clase ni un método especial.
-    // La lógica vive justo donde se necesita. En CimaStudio, esto es lo que
-    // usamos en la etiqueta [C2] para el Slider.
+    // La lógica vive justo donde se necesita. En Qt, esto lo usamos 
+    // frecuentemenete.
 
     return app.exec();
 }

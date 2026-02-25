@@ -23,7 +23,7 @@ int main() {
     std::cout << "Direccion de memoria en el Heap: " << p_edadHeap << std::endl;
 
     // 3. LA SUTILEZA TÉCNICA
-    // Si estuviéramos en una función de CimaStudio, al terminar, 'edadStack' 
+    // Si estuviéramos en una función cualquiera, al terminar, 'edadStack' 
     // moriría. Pero el entero de 'p_edadHeap' seguiría vivo en la RAM.
 
     // 4. LIMPIEZA MANUAL
