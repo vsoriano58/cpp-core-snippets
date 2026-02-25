@@ -1,9 +1,9 @@
 #include <QApplication>
 #include <QPushButton>
-#include <QDebug> // Para imprimir en la consola de Qt
+#include <QDebug> // <- Para imprimir en la consola de Qt
 
 /** 
- * PROGRAMA: 03_Lambdas_y_Slots
+ * PROGRAMA: s0240-lambdas-y-slots
  * OBJETIVO: Conectar una señal (Signal) a una lógica inmediata (Slot Lambda).
  * CLAVE: Uso de la sintaxis [captura](parámetros) { código }.
  */
@@ -28,9 +28,7 @@ int main(int argc, char *argv[]) {
     boton.show();
 
     // 2. LA SUTILEZA TÉCNICA
-    // Fíjate que no hemos tenido que crear una clase ni un método especial.
-    // La lógica vive justo donde se necesita. En Qt, esto lo usamos 
-    // frecuentemenete.
-
+    // No hemos tenido que crear una clase ni un método especial.
+    // La lógica vive justo donde se necesita.
     return app.exec();
 }
