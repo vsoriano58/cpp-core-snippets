@@ -66,5 +66,13 @@ int main() {
     return 0;
 }
 
+/*
+    Salida del programa:
+    
+    Resultado final: 3 (Debe ser 3.0)
+*/
+
 // Compilar
-// nvcc SumaVectores_v1.1.cu -o SumaVectores_v1.1
+// nvcc SumarVectores_v1.1.cu -o ./build/SumarVectores_v1.1
+
+// ./build/SumarVectores_v1.1

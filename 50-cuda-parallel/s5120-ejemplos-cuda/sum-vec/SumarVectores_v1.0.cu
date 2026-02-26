@@ -43,9 +43,15 @@ int main() {
     return 0;
 }
 
+/*
+    Salida del programa:
+
+    Resultado de la suma en GPU:
+    11 22 33 44 55 
+*/
+
 
 // Compilar
-// nvcc hola_cuda2.cu -o hola_cuda2
+// nvcc SumarVectores_v1.0.cu -o ./build/SumarVectores_v1.0
 
-// Ejecutar
-// ./hola_cuda2
+// ./build/SumarVectores_v1.0

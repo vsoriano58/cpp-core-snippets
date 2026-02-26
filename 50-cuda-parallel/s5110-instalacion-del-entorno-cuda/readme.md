@@ -153,18 +153,21 @@ Hola desde la GPU! Soy el hilo número: 6
 Hola desde la GPU! Soy el hilo número: 7
 ```
 
-Los hilos salen ordenados del 0 al 7. Uno tiende a pensar que al lanzar varios hilos de forma simultánea terminaban de forma caótica, como ocurre por ejemplo en kotlin, Incluso hay una instrucción `join()` para esperar a que todos acaben. ¿Por qué no se cumple aquí la misma regla?
+Los hilos salen ordenados del 0 al 7. Uno tiende a pensar que al lanzar varios hilos de forma simultánea terminarían de forma caótica, como ocurre por ejemplo en kotlin,  donde tenemos una instrucción `join()` para esperar a que todos acaben.
 
 ---
 
 ## 1.6 El orden en la GPU vs CPU (Kotlin/Java/C++ Threads)
 
-En `CPU` (como en Kotlin), el sistema operativo decide cuándo darle un "respiro" a un hilo y dárselo a otro. Es un caos total.
+**¿Por qué aparecen los mensajes ordenados en la consola?**
 
-En `CUDA`, la arquitectura es `SIMT (Single Instruction, Multiple Threads)`. Los hilos se lanzan en `grupos de 32 llamados Warps`.
+1. En **CPU** (como en Kotlin), el sistema operativo decide cuándo darle un "respiro" a un hilo y dárselo a otro. Es un caos total. 
 
-Por qué han salido ordenados: Como solo hemos lanzado 8 hilos (menos de un Warp de 32), todos han entrado al procesador exactamente al mismo tiempo y han ejecutado la misma instrucción de printf casi en sincronía. Al ser tan poquita carga, el búfer de salida los ha escupido en orden.
-La realidad: Si lanzamos `500 hilos (<<<1, 500>>>)`, veremos que el 0 sale primero, pero a lo mejor luego sale el 34, luego el 12... No hay garantía de orden. En CUDA, el programador debe asumir que los hilos son "anárquicos" entre sí.
+2. En **CUDA**, la arquitectura es `SIMT (Single Instruction, Multiple Threads)`. Los hilos se lanzan en `grupos de 32 llamados Warps`. Como hemos lanzado solo 8 hilos, todos pertenecen al mismo Warp. Los hilos de un mismo Warp se ejecutan en SIMT (Single Instruction, Multiple Threads), es decir, ejecutan la misma instrucción exactamente al mismo tiempo.
+
+3. **El Buffer de Salida**: Aunque la ejecución sea paralela, el printf dentro de un kernel de CUDA escribe en un buffer compartido. En programas tan pequeños y con tan pocos hilos, el hardware suele despachar el buffer al sistema operativo de forma secuencial por ID de hilo.
+
+4. **Determinismo vs. Caos**: Si usted lanzara 1000 hilos (<<<1, 1000>>>) o repartiera el trabajo en varios bloques (<<<10, 10>>>), empezaría a ver que el orden se rompe. Los bloques pueden ejecutarse en diferentes SM (Streaming Multiprocessors) y ahí sí vería que el bloque 5 puede terminar antes que el bloque 0.
 
 Una vez comprobado que la `CPU` y `GPU` se entienden bien y el programa `holaCuda.cu` funciona, veamos otro ejemplo.
 
@@ -261,13 +264,17 @@ Destaquemos lo siguiente:
 
 1. `int i = threadIdx.x;`: Esta es la línea más importante del Kernel. Es el "DNI" del hilo. Si lanzamos 5 hilos, cada uno entra aquí con un valor de i distinto (0, 1, 2, 3, 4). Así, cada hilo sabe exactamente qué posición del array le toca procesar.
 
-2. `cudaMalloc((void**)&d_a, ...)`: Aquí estás reservando espacio en la VRAM de la RTX 4060 Ti. A diferencia de malloc en C++, aquí pasamos la dirección del puntero porque la función debe modificar su valor para que apunte a la dirección de memoria de la tarjeta.
+2. `cudaMalloc((void**)&d_a, ...)`: Aquí estamos reservando espacio en la VRAM de la RTX 4060 Ti. A diferencia de malloc en C++, aquí pasamos la dirección del puntero porque la función debe modificar su valor para que apunte a la dirección de memoria de la tarjeta. La GPU necesita escribir la dirección de memoria en el puntero del Host.
 
-3. `cudaMemcpy(..., cudaMemcpyHostToDevice)`: Es el "puente". Estmos cruzando los datos por el bus PCIe desde la memoria RAM (CPU) a la memoria de la tarjeta de video. Es el cuello de botella habitual en GPU, por eso es vital hacerlo bien.
+
+3. `cudaMemcpy(..., cudaMemcpyHostToDevice)`: Es el "puente". Estmos cruzando los datos por el bus PCIe desde la memoria RAM (CPU) a la memoria de la tarjeta de video. En aplicaciones reales, a veces el tiempo de cudaMemcpy supera al de cálculo si el dataset es pequeño. Por eso, habitualmente  buscamos minimizar los viajes de datos. Es el cuello de botella habitual en GPU, por eso es vital hacerlo bien. 
 
 4. `sumarVectores<<<1, N>>>`: La configuración de lanzamiento. Al poner N (que es 5), le dices a la GPU: "Crea 5 hilos y dales a cada uno el código del kernel".
 
 5. `cudaFree(d_a)`: Imprescindible. Al igual que con los punteros en C++, si no liberas la memoria de la GPU, se queda ocupada hasta que reinicies, lo que podría causar un "Memory Leak" en la tarjeta gráfica.
+
+6. `Escalabilidad`: Al usar **threadIdx.x**, hemos sentado las bases del Paralelismo Masivo. Si mañana decidimos sumar 1.000.000 de elementos en lugar de 5, solo tendríamos que ajustar la configuración de bloques y mallas (Grid & Block), manteniendo el kernel prácticamente intacto.
+
 
 ---
 
