@@ -1,10 +1,14 @@
 /**
- * Programa: Suma_Matrices_3x3.cu
- * Descripción: Implementación completa 2D con verificación de resultados.
+ * @file SumarMatrices.cu
+ * @brief Implementación completa 2D con verificación de resultados.
+ * @author alcón68
+ * 
+ * CONCEPT: Calculamos la suma de dos matrices A y B.
  */
 
 #include <iostream>
 #include <cuda_runtime.h>
+#include <iomanip> // Necesario para setprecision y fixed
 
 // [ETAPA 4.1] DEFINICIÓN DEL KERNEL
 __global__ void matrixAdd(const float *A, const float *B, float *C, int width, int height) {
@@ -61,6 +65,8 @@ int main() {
 
     // VERIFICACIÓN: Imprimir la matriz resultado
     std::cout << "Matriz Resultante (Debe ser todo 3.0):" << std::endl;
+
+    std::cout << std::fixed << std::setprecision(1);
     for (int r = 0; r < height; r++) {
         for (int c = 0; c < width; c++) {
             std::cout << h_C[r * width + c] << " ";
@@ -74,16 +80,23 @@ int main() {
 
     return 0;
 }
+
 /**
- * Fin del programa.
+ * Salida del programa:
+ * Matriz Resultante (Debe ser todo 3.0):
+ *   3.0 3.0 3.0 
+ *   3.0 3.0 3.0 
+ *   3.0 3.0 3.0 
+ * 
  * Nota: Aunque la matriz sea pequeña, el overhead de mover datos (Etapa 3 y 5) 
  * es mayor que el cálculo, pero sirve para validar la lógica 2D.
  */
 
-// Compilar
-// nvcc SumarMatrices.cu -o SumarMatrices
-
-// Ejecutar
-// ./SumarMatrices
+/*
+    Compilar
+    ========
+    nvcc SumarMatrices.cu -o ./build/SumarMatrices
+    ./SumarMatrices
+ */
 
 

@@ -1,7 +1,11 @@
 /**
- * Programa: Producto_Parametrico_Tiempos.cu
- * Descripción: Multiplicación de elementos con medición de tiempo total 
- *              (Transferencias + Cálculo). Soporta N > 1024.
+ * @file ProductoMatrices_v1.1.cu
+ * @brief Multiplica dos matrices (A * B = C) y mide el tiempo total de ejecución. 
+ *              Transferencias + Kernel
+ *              Soporta N > 1024
+ * 
+ * @author alcón68
+ * CONCEPT: Calculamos el producto elemento a elemento de dos matrices A y B.
  */
 
 #include <iostream>
@@ -50,7 +54,7 @@ int main() {
     cudaMemcpy(d_A, h_A, size, cudaMemcpyHostToDevice);
     cudaMemcpy(d_B, h_B, size, cudaMemcpyHostToDevice);
 
-    // [ETAPA 4.3] KERNEL LAUNCH (Configuración Dinámica)
+    // [ETAPA 4] KERNEL LAUNCH (Configuración Dinámica)
     int threadsPerBlock = 256; 
     int blocksPerGrid = (N + threadsPerBlock - 1) / threadsPerBlock;
     
@@ -87,9 +91,20 @@ int main() {
 }
 
 /** 
- * Este código es la base perfecta para entender el coste del bus PCIe.
+ *  Salida del programa (Clarificador comparado con el ejemplo anterior)
+ *  ===================
+ *  Tiempo total (Carga + Kernel + Descarga): 6.13421 ms
+
+    Verificacion de calculo:
+    Indice [0]: 0.411995 * 0.447815 = 0.184498
+    Indice [1048575]: 0.631638 * 0.253176 = 0.159916
  */
 
-// Compilar
-// nvcc ProductoMatrices_v1.1.cu -o ProductoMatrices_v1.1
+ /*
+    Compilar
+    ========
+    nvcc ProductoMatrices_v1.1.cu -o ./build/ProductoMatrices_v1.1
+    ./build/ProductoMatrices_v1.1
+ */
+
 

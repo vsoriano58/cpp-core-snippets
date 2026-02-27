@@ -1,3 +1,11 @@
+ /**
+ * @file SumarVectores_v1.0.cu
+ * @brief Implementación del flujo básico de 5 etapas para procesamiento paralelo
+ * @author alcón68
+ * 
+ * CONCEPTO: Utilizamos un Kernel con un bloque de cinco hilos. Cada hilo realiza la
+ * suma individual de dos elementos, uno de cada vector.
+ */
 #include <device_launch_parameters.h>
 #include <iostream>
 #include <cuda_runtime.h>
@@ -5,7 +13,7 @@
 // KERNEL: Cada hilo sumará una posición del array
 __global__ void sumarVectores(int* a, int* b, int* c) {
     int i = threadIdx.x; 
-    c[i] = a[i] + b[i]; // La GPU hace el trabajo
+    c[i] = a[i] + b[i]; // La GPU realiza la suma para cada elemnto del array
 }
 
 int main() {
@@ -33,7 +41,7 @@ int main() {
     cudaMemcpy(h_c, d_c, N * sizeof(int), cudaMemcpyDeviceToHost);
 
     // Mostrar resultados
-    std::cout << "Resultado de la suma en GPU:" << std::endl;
+    std::cout << "Resultado de la suma realizada en GPU:" << std::endl;
     for(int i=0; i<N; i++) std::cout << h_c[i] << " ";
     std::cout << std::endl;
 
@@ -43,9 +51,18 @@ int main() {
     return 0;
 }
 
+/*
+    Salida del programa:
+    ====================
 
-// Compilar
-// nvcc hola_cuda2.cu -o hola_cuda2
+    Resultado de la suma en GPU:
+    11 22 33 44 55 
+*/
 
-// Ejecutar
-// ./hola_cuda2
+/*
+    Compilar
+    ========
+    nvcc SumarVectores_v1.0.cu -o ./build/SumarVectores_v1.0
+*/
+
+

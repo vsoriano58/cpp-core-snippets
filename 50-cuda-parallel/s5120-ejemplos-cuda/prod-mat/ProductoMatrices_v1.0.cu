@@ -1,7 +1,9 @@
 /**
- * Programa: Producto_Elemento_a_Elemento.cu
- * Descripción: Multiplica dos matrices (A * B = C) y mide el tiempo de ejecución del kernel.
- * Nota: El tamaño es paramétrico (N).
+ * @file ProductoMatrices_v1.0.cu
+ * @brief Multiplica dos matrices (A * B = C) y mide el tiempo de ejecución del kernel.
+ * @author alcón68
+ * 
+ * CONCEPT: Calculamos el producto elemento a elemento de dos matrices A y B.
  */
 
 #include <iostream>
@@ -79,7 +81,20 @@ int main() {
     return 0;
 }
 
-// Compilar
-// nvcc ProductoMatrices_v1.0.cu -o ProductoMatrices_v1.0
+/*
+    Salida del programa
+    ===================
+    Tamaño de la matriz: 1024 elementos.
+    Tiempo de ejecucion del Kernel: 0.178176 ms
+    Verificacion (indice 0): 0.888929 * 0.0420423 = 0.0373726
+*/
+
+/*
+    Compilar
+    ========
+    nvcc ProductoMatrices_v1.0.cu -o ./build/ProductoMatrices_v1.0
+    ./build/ProductoMatrices_v1.0
+*/
+
 
 

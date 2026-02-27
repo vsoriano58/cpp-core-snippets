@@ -1,11 +1,18 @@
-/**
- * Programa: Suma de Vectores en CUDA (Vector Addition)
- * Descripción: Implementación del flujo básico de 5 etapas para procesamiento paralelo.
- * Autor: Thought Partner & Estudiante de CUDA
+ /**
+ * @file SumarVectores_v1.1.cu
+ * @brief Implementación del flujo de 5 etapas para procesamiento paralelo
+ * @author alcón68
+ * 
+ * CONCEPTO: Ampliamos el tamaño de los vectores a N = 1000000; Establecemos:
+ *  - threadsPerBlock = 256
+ *  - blocksPerGrid = (N + threadsPerBlock - 1) / threadsPerBlock;
+ *  Los elementos de los vectores a sumar son 'float' aleatorios
  */
-
+#include <device_launch_parameters.h>
 #include <iostream>
 #include <cuda_runtime.h>
+#include <iomanip> // Necesario para setprecision y fixed
+
 
 // [ETAPA 4.1] DEFINICIÓN DEL KERNEL: Ejecución en el Device
 __global__ void vectorAdd(const float *A, const float *B, float *C, int N) {
@@ -43,7 +50,7 @@ int main() {
     cudaMemcpy(d_A, h_A, size, cudaMemcpyHostToDevice);
     cudaMemcpy(d_B, h_B, size, cudaMemcpyHostToDevice);
 
-    // [ETAPA 4.3] KERNEL LAUNCH: Configuración y lanzamiento de hilos
+    // [ETAPA 4] KERNEL LAUNCH: Configuración y lanzamiento de hilos
     int threadsPerBlock = 256;
     int blocksPerGrid = (N + threadsPerBlock - 1) / threadsPerBlock;
     
@@ -53,7 +60,9 @@ int main() {
     cudaMemcpy(h_C, d_C, size, cudaMemcpyDeviceToHost);
 
     // Verificación del cálculo
-    std::cout << "Resultado final: " << h_C[0] << " (Debe ser 3.0)" << std::endl;
+    std::cout << "Resultado final: " 
+              << std::fixed << std::setprecision(1) << h_C[0] 
+              << " (Debe ser 3)" << std::endl;
 
     // LIMPIEZA: Liberación de recursos en Device y Host
     cudaFree(d_A);
@@ -68,11 +77,12 @@ int main() {
 
 /*
     Salida del programa:
+    ====================
     
-    Resultado final: 3 (Debe ser 3.0)
+    Resultado final: 3.0 (Debe ser 3.0)
 */
 
 // Compilar
+// ========
 // nvcc SumarVectores_v1.1.cu -o ./build/SumarVectores_v1.1
 
-// ./build/SumarVectores_v1.1

@@ -1,17 +1,18 @@
-# 1. El Instalación del entorno CUDA (S5110)
+# 1. El Instalación y bases del entorno CUDA (S5110)
 
 # Índice
 
-- 1.- Instalar CUDA	1
-  - 1.1.- Preparación del Sistema (Linux/Ubuntu)	1
-  - 1.2.- El "¡Hola Mundo!" de la GPU	2
-  - 1.3.- Compilación y Ejecución	3
-  - 1.4.- Resultados	3
-  - 1.5.- Salida del programa	3
-  - 1.6.- El orden en la GPU vs CPU (Kotlin/Java/C++ Threads)	4
-  - 1.6.1.- sumarVectores.cu, de un vistazo	5
-  - 1.6.2.- 📝 Análisis técnico de sumarVectores.cu	5
-- 2.- Metodología Universal	6
+- 1.- Instalar CUDA
+  - 1.1.- Preparación del Sistema (Linux/Ubuntu)
+  - 1.2.- El "¡Hola Mundo!" de la GPU
+  - 1.3.- Compilación y Ejecución
+  - 1.4.- Resultados
+  - 1.5.- Salida del programa
+  - 1.6.- El orden en la GPU vs CPU (Kotlin/Java/C++ Threads)
+  - 1.6.1.- SumarVectores_1.0.cu, de un vistazo
+  - 1.6.2.- 📝 Análisis técnico de sumarVectores.cu
+  - 1.6.3.- SumarVectores_1.1.cu
+- 2.- Metodología Universal
   - 2.1.- ⚙️ El Flujo de Trabajo en CUDA (Los 6 Pasos)
 
 ---
@@ -98,7 +99,8 @@ int main() {
 }
 
 // COMPILAR
-// nvcc holaCuda.cu -o ./build/holaCuda
+// ========
+// nvcc holaCuda.cu -o ./build/holaCudaS
 // ./holaCuda
 ```
 
@@ -182,7 +184,7 @@ int h_a[N] = {1, 2, 3, 4, 5}; 	// h_ = Host (CPU); d_ = Dispositivo (GPU)
 int h_b[N] = {10, 20, 30, 40, 50};
 ```
 
-**sumarVectores.cu**
+**SumarVectores_v1.0.cu**
 
 ```cpp
 #include <device_launch_parameters.h>
@@ -232,15 +234,18 @@ int main() {
 
 /*
     SALIDA del programa
+    ===================
 
     Resultado de la suma en GPU:
     11 22 33 44 55 
 */
 
-
-// COMPILAR
-// nvcc sumarVectores.cu -o ./build/sumarVectores
-// ./sumarVectores
+/*
+    COMPILAR
+    ========
+    nvcc SumarVectores_v1.0.cu -o ./build/SumarVectores_1.0
+    ./sumarVectores_1.0
+*/
 ```
 
 ---
