@@ -14,7 +14,7 @@
   <img src="portada.svg" alt="El Cielo de los Snippets" width="100%">
 </p>
 
-Esta biblioteca de `SNIPPETS` se fundamenta en una arquitectura modular y escalable, diseñada para que cada componente actúe como una pieza independiente dentro de un sistema coherente. El propósito es ofrecer una estructura lógica donde la organización del conocimiento sea tan importante como el código mismo. Este es un proyecto en constante evolución y, como toda obra humana, está sujeto a mejoras. Si encuentras algún error o tienes una sugerencia, te invito a abrir una Issue o enviarme un mensaje; tu feedback es una herramienta vital para pulir este mapa de soluciones y aprender juntos en el proceso.
+Esta biblioteca de `SNIPPETS` se fundamenta en una arquitectura modular y escalable, diseñada para que cada componente actúe como una pieza independiente dentro de un sistema coherente. El propósito es ofrecer una estructura lógica donde la organización del conocimiento sea tan importante como el código mismo. Este es un proyecto en constante evolución y, como toda obra humana, está sujeto a mejoras.
 
 **Declaración de honestidad del autor**: El contenido de este repositorio y la profundidad teórica de los temas son fruto de un proceso de co-creación con `AI on Google Search, powered by the Gemini family of models`. Como aprendiz en muchas de estas áreas, este soporte me ha permitido organizar y presentar soluciones que superan mi dominio actual, permitiéndome aprender en el proceso. Espero que este material sea útil y que mi curiosidad por seguir ampliándolo se mantenga intacta.
 
