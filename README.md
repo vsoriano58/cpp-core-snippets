@@ -39,7 +39,4 @@ Esta biblioteca de `SNIPPETS` se fundamenta en una arquitectura modular y escala
 - **GPGPU (General-Purpose computing on GPUs):** Uso de la unidad de procesamiento gráfico para cálculos computacionales masivos.
 - **CUDA:** Computación paralela de alto rendimiento utilizando núcleos NVIDIA para optimizar algoritmos intensivos.
 
-### 🔹 60-qt-cuda
-- **Visualización de Datos:** Creación de Dashboards y herramientas de monitoreo para procesos ejecutados en GPU, uniendo la potencia de cálculo con interfaces de usuario fluidas.
-
 > "La ilusión es el motor de la creación; el orden es el motor de la maestría."
