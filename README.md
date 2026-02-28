@@ -36,7 +36,10 @@ Esta biblioteca de `SNIPPETS` se fundamenta en una arquitectura modular y escala
 - **Integración Visual:** Implementación de flujos de video y procesamiento de imágenes dentro de interfaces gráficas interactivas.
 
 ### 🔹 50-cuda-parallel
-- **GPGPU (General-Purpose computing on GPUs):** Uso de la unidad de procesamiento gráfico para cálculos computacionales masivos.
+- **CUDA:** Computación paralela de alto rendimiento utilizando núcleos NVIDIA para optimizar algoritmos intensivos.
+
+### 🔹 60-proyectos-qt-cuda
+- **Qt Framework:** Desarrollo de interfaces gráficas (GUI) y lógica de aplicaciones multiplataforma.
 - **CUDA:** Computación paralela de alto rendimiento utilizando núcleos NVIDIA para optimizar algoritmos intensivos.
 
 > "La ilusión es el motor de la creación; el orden es el motor de la maestría."
